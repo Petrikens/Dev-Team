@@ -22,17 +22,38 @@
       <template #title> {{ peopleCard.Name }} </template>
       <template #subtitle> {{ peopleCard.Title }} </template>
       <template #content>
-        <div class="progress_label">
-          <p>Profit</p>
-          <p>+ ${{ peopleCard.Profit[0].Amount }}</p>
+        <div class="profit">
+          <div class="profit_label">
+            <p>Profit</p>
+            <p>+ ${{ peopleCard.Profit[0].Amount }}</p>
+          </div>
+          <ProgressBar
+            id="profitBar"
+            :style="{
+              height: 15 + 'px',
+            }"
+            :value="peopleCard.Profit[0].Amount / 10"
+            :showValue="false"
+          />
         </div>
-        <ProgressBar
-          :style="{
-            height: 15 + 'px',
-          }"
-          :value="peopleCard.Profit[0].Amount / 10"
-          :showValue="false"
-        />
+        <div class="attention">
+          <div class="attention_label">
+            <p>Attention</p>
+            <p>{{ attentionSum }} h</p>
+          </div>
+          <div class="attention_bar" v-if="!attentionSum"></div>
+          <div v-else class="attention_color_wrapper">
+            <div
+              v-for="attention in attentionWidth"
+              :key="attention.amount"
+              class="attention_color_bar"
+              :style="{
+                background: '#' + attention.color,
+                width: attention.width + 'px',
+              }"
+            ></div>
+          </div>
+        </div>
       </template>
     </Card>
   </div>
@@ -50,7 +71,41 @@ export default {
   data() {
     return {
       bgColor: "#" + this.peopleCard.Profit[0].Color,
+      profitBarWidth: null,
     };
+  },
+
+  mounted() {
+    this.getProfitBarWidth();
+  },
+
+  computed: {
+    attentionSum() {
+      return this.peopleCard.Attention
+        ? this.peopleCard.Attention.reduce((acc, curr) => acc + curr.Amount, 0)
+        : 0;
+    },
+
+    attentionWidth() {
+      console.log(
+        this.peopleCard.Attention.map((attention) => ({
+          width: attention.Amount * this.getProfitBarWidth,
+          amount: attention.Amount,
+          color: attention.Color,
+        })),
+      );
+      return this.peopleCard.Attention.map((attention) => ({
+        width: (attention.Amount * this.profitBarWidth) / this.attentionSum,
+        amount: attention.Amount,
+        color: attention.Color,
+      }));
+    },
+  },
+
+  methods: {
+    getProfitBarWidth() {
+      this.profitBarWidth = document.getElementById("profitBar").offsetWidth;
+    },
   },
 };
 </script>
@@ -80,12 +135,30 @@ img {
   border-radius: 20px;
 }
 
-.progress_label {
+.profit {
+  margin-bottom: 10px;
+}
+
+.profit_label,
+.attention_label {
   display: flex;
   justify-content: space-between;
 }
 
 .p-progressbar :deep(.p-progressbar-value) {
   background: v-bind(bgColor);
+}
+
+.attention_bar {
+  width: 100%;
+  height: 15px;
+  background: #dee2e6;
+}
+
+.attention_color_wrapper {
+  display: flex;
+}
+.attention_color_bar {
+  height: 15px;
 }
 </style>
