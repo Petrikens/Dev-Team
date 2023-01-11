@@ -20,4 +20,7 @@ export default {
 .main_wrapper {
   padding: 0px 20px;
 }
+.content {
+  padding: 0px 150px;
+}
 </style>

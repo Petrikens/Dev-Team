@@ -14,7 +14,7 @@ export default {
 
 <style scoped>
 .header_wrapper {
-  padding: 20px 0px;
+  padding: 40px 0px;
   display: flex;
   justify-content: space-between;
 }

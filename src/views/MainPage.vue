@@ -1,16 +1,19 @@
 <template>
   <loading-spinner v-if="isLoading" />
   <div class="container" v-else>
-    <h1>HOME</h1>
+    <div class="people_list">
+      <people-list :peopleList="peopleList" />
+    </div>
   </div>
 </template>
 
 <script>
 import * as peopleApi from "../api/peopleApi";
+import PeopleList from "../components/peopleList/PeopleList.vue";
 import LoadingSpinner from "../components/uiComponents/LoadingSpinner.vue";
 
 export default {
-  components: { LoadingSpinner },
+  components: { LoadingSpinner, PeopleList },
   name: "MainPage",
 
   data() {
@@ -48,5 +51,12 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.people_list {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-around;
 }
 </style>
