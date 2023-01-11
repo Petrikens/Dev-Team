@@ -6,6 +6,9 @@ import { store } from "./store";
 
 import Button from "primevue/button";
 import InputText from "primevue/inputtext";
+import ToastService from "primevue/toastservice";
+import Toast from "primevue/toast";
+import ProgressSpinner from "primevue/progressspinner";
 
 const app = createApp(App);
 
@@ -18,6 +21,9 @@ app.use(router);
 app.use(store);
 app.mount("#app");
 app.use(PrimeVue);
+app.use(ToastService);
 
 app.component("Button", Button);
 app.component("InputText", InputText);
+app.component("Toast", Toast);
+app.component("ProgressSpinner", ProgressSpinner);

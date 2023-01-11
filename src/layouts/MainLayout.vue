@@ -1,4 +1,5 @@
 <template>
+  <Toast />
   <div class="main_wrapper">
     <header-bar />
     <div class="content">
