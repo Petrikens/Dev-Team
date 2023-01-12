@@ -11,3 +11,9 @@ export function fetchPerson(id) {
 
   return http.axiosGet(url);
 }
+
+export function editPerson(data, config, id) {
+  const url = import.meta.env.VITE_SERVER_PREFIX + `people/${id}`;
+
+  return http.axiosPost(url, data, config);
+}

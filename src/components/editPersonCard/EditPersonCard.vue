@@ -36,6 +36,20 @@
       </template>
     </Card>
   </div>
+  <div class="button_block">
+    <Button
+      label="Close"
+      icon="pi pi-times"
+      class="p-button-text"
+      @click="() => dialogRef.close()"
+    />
+    <Button
+      label="Edit"
+      icon="pi pi-check"
+      class="p-button-text"
+      @click="createTask"
+    />
+  </div>
 </template>
 
 <script>
@@ -44,6 +58,7 @@ import AttentionBar from "../attentionBar/AttentionBar.vue";
 import CardTag from "../cardTag/CardTag.vue";
 import ProfitBar from "../profitBar/ProfitBar.vue";
 import LoadingSpinner from "../uiComponents/LoadingSpinner.vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "EditPersonCard",
@@ -67,8 +82,13 @@ export default {
     this.getProfitBarWidth();
   },
 
+  computed: {
+    ...mapGetters("authModule", ["getUser"]),
+  },
+
   methods: {
     async fetchPerson() {
+      console.log(this.getUser);
       try {
         const response = await peopleApi.fetchPerson(
           this.dialogRef.data.personId,
@@ -92,6 +112,35 @@ export default {
         this.isLoading = false;
       }
     },
+
+    async createTask() {
+      try {
+        const data = JSON.stringify({
+          Name: this.handleName,
+          Title: this.handleTitle,
+        });
+
+        const config = {
+          headers: {
+            "X-Auth-Token": this.getUser.accessToken,
+          },
+        };
+
+        const id = this.personInfo.Id;
+
+        const response = await peopleApi.editPerson(data, config, id);
+
+        console.log(response.data);
+      } catch (error) {
+        this.$toast.add({
+          severity: "error",
+          summary: "Ошибка",
+          detail: error,
+          life: 3000,
+        });
+      }
+    },
+
     getProfitBarWidth() {
       this.profitBarWidth = document.getElementById("profitBar").offsetWidth;
     },
@@ -123,5 +172,9 @@ img {
   height: 100%;
   object-fit: cover;
   border-radius: 20px;
+}
+.button_block {
+  display: flex;
+  justify-content: space-between;
 }
 </style>
