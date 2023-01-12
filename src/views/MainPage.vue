@@ -5,7 +5,7 @@
       <people-list :peopleList="peopleList" />
     </div>
   </div>
-  <div ref="observer" class="observer"></div>
+  <div v-intersection="loadMorePeople" class="observer"></div>
 </template>
 
 <script>
@@ -28,21 +28,6 @@ export default {
 
   mounted() {
     this.fetchPeople();
-
-    const options = {
-      rootMargin: "0px",
-      threshold: 1.0,
-    };
-
-    let callback = (entries, observer) => {
-      if (entries[0].isIntersecting) {
-        this.loadMorePeople();
-      }
-    };
-
-    const observer = new IntersectionObserver(callback, options);
-
-    observer.observe(this.$refs.observer);
   },
 
   methods: {

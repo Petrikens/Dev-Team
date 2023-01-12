@@ -3,6 +3,7 @@ import PrimeVue from "primevue/config";
 import App from "./App.vue";
 import router from "./router/router";
 import { store } from "./store";
+import VIntersection from "./directives/VIntersection";
 
 import Button from "primevue/button";
 import InputText from "primevue/inputtext";
@@ -25,6 +26,8 @@ app.use(store);
 app.mount("#app");
 app.use(PrimeVue);
 app.use(ToastService);
+
+app.directive("intersection", VIntersection);
 
 app.component("Button", Button);
 app.component("InputText", InputText);
