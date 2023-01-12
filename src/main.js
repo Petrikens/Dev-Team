@@ -15,6 +15,8 @@ import ProgressBar from "primevue/progressbar";
 import Tag from "primevue/tag";
 import DialogService from "primevue/dialogservice";
 import DynamicDialog from "primevue/dynamicdialog";
+import OverlayPanel from "primevue/overlaypanel";
+import Avatar from "primevue/avatar";
 
 const app = createApp(App);
 
@@ -40,3 +42,5 @@ app.component("Card", Card);
 app.component("ProgressBar", ProgressBar);
 app.component("Tag", Tag);
 app.component("DynamicDialog", DynamicDialog);
+app.component("OverlayPanel", OverlayPanel);
+app.component("Avatar", Avatar);
