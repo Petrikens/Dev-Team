@@ -23,8 +23,6 @@
 </template>
 
 <script>
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-
 export default {
   name: "LoginPage",
 
@@ -32,15 +30,36 @@ export default {
     return {
       handleEmail: "",
       handlePassword: "",
+      errorMessage: "",
     };
   },
 
   methods: {
-    doLogin() {
-      this.$store.dispatch(`authModule/login`, {
-        email: this.handleEmail,
-        password: this.handlePassword,
-      });
+    async doLogin() {
+      try {
+        await this.$store.dispatch(`authModule/login`, {
+          email: this.handleEmail,
+          password: this.handlePassword,
+        });
+      } catch (error) {
+        switch (error.code) {
+          case "auth/user-not-found":
+            this.errorMessage = "User not found";
+            break;
+          case "auth/wrong-password":
+            this.errorMessage = "Wrong password";
+            break;
+          default:
+            this.errorMessage = "Something went wrong";
+        }
+
+        this.$toast.add({
+          severity: "warn",
+          summary: "Warning",
+          detail: this.errorMessage,
+          life: 3000,
+        });
+      }
     },
   },
 };

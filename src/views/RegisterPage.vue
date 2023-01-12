@@ -24,8 +24,6 @@
 </template>
 
 <script>
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-
 export default {
   name: "RegisterPage",
 
@@ -33,19 +31,45 @@ export default {
     return {
       handleEmail: "",
       handlePassword: "",
+      errorMessage: "",
     };
   },
 
   methods: {
-    register() {
-      this.$store.dispatch(
-        `authModule/register`,
-        {
-          email: this.handleEmail,
-          password: this.handlePassword,
-        },
-        { root: true },
-      );
+    async register() {
+      try {
+        await this.$store.dispatch(
+          `authModule/register`,
+          {
+            email: this.handleEmail,
+            password: this.handlePassword,
+          },
+          { root: true },
+        );
+      } catch (error) {
+        switch (error.code) {
+          case "auth/email-already-in-use":
+            this.errorMessage = "Email already in use";
+            break;
+          case "auth/invalid-email":
+            this.errorMessage = "Invalid email";
+            break;
+          case "auth/operation-not-allowed":
+            this.errorMessage = "Operation not allowed";
+            break;
+          case "auth/weak-password":
+            this.errorMessage = "Weak password";
+            break;
+          default:
+            this.errorMessage = "Something went wrong";
+        }
+        this.$toast.add({
+          severity: "warn",
+          summary: "Warning",
+          detail: this.errorMessage,
+          life: 3000,
+        });
+      }
     },
   },
 };
