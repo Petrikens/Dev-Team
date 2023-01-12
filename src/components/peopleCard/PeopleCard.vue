@@ -32,7 +32,7 @@
             :style="{
               height: 15 + 'px',
             }"
-            :value="peopleCard.Profit[0].Amount / 10"
+            :value="profitBarValue"
             :showValue="false"
           />
         </div>
@@ -71,6 +71,7 @@ export default {
   data() {
     return {
       bgColor: "#" + this.peopleCard.Profit[0].Color,
+      profitBarValue: this.peopleCard.Profit[0].Amount / 10,
       profitBarWidth: null,
     };
   },
@@ -87,13 +88,6 @@ export default {
     },
 
     attentionWidth() {
-      console.log(
-        this.peopleCard.Attention.map((attention) => ({
-          width: attention.Amount * this.getProfitBarWidth,
-          amount: attention.Amount,
-          color: attention.Color,
-        })),
-      );
       return this.peopleCard.Attention.map((attention) => ({
         width: (attention.Amount * this.profitBarWidth) / this.attentionSum,
         amount: attention.Amount,
