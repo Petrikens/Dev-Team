@@ -4,12 +4,15 @@
     v-for="peopleCard in peopleList"
     :key="peopleCard.Id"
   >
-    <PeopleCard :peopleCard="peopleCard" />
+    <PeopleCard :peopleCard="peopleCard" @click="editCard(peopleCard.Id)" />
   </div>
+  <DynamicDialog />
 </template>
 
 <script>
 import PeopleCard from "../peopleCard/PeopleCard.vue";
+import EditPersonCard from "../editPersonCard/EditPersonCard.vue";
+
 export default {
   components: { PeopleCard },
   name: "PeopleList",
@@ -17,6 +20,27 @@ export default {
   props: {
     peopleList: {
       type: Array,
+    },
+  },
+
+  methods: {
+    editCard(personId) {
+      this.$dialog.open(EditPersonCard, {
+        props: {
+          header: "Edit Card",
+          style: {
+            width: "30vw",
+          },
+          breakpoints: {
+            "960px": "75vw",
+            "640px": "90vw",
+          },
+          modal: true,
+        },
+        data: {
+          personId,
+        },
+      });
     },
   },
 };

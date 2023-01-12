@@ -13,6 +13,8 @@ import ProgressSpinner from "primevue/progressspinner";
 import Card from "primevue/card";
 import ProgressBar from "primevue/progressbar";
 import Tag from "primevue/tag";
+import DialogService from "primevue/dialogservice";
+import DynamicDialog from "primevue/dynamicdialog";
 
 const app = createApp(App);
 
@@ -26,6 +28,7 @@ app.use(store);
 app.mount("#app");
 app.use(PrimeVue);
 app.use(ToastService);
+app.use(DialogService);
 
 app.directive("intersection", VIntersection);
 
@@ -36,3 +39,4 @@ app.component("ProgressSpinner", ProgressSpinner);
 app.component("Card", Card);
 app.component("ProgressBar", ProgressBar);
 app.component("Tag", Tag);
+app.component("DynamicDialog", DynamicDialog);

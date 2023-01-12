@@ -17,8 +17,8 @@ export default {
 
 .p-progress-spinner {
   position: fixed;
-  left: calc(50vw - 50px);
-  top: calc(50vh - 50px);
+  left: calc(50% - 50px);
+  top: calc(50% - 50px);
   width: 100px;
   height: 100px;
 }

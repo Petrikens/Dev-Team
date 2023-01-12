@@ -5,3 +5,9 @@ export function fetchPeopleList(config) {
 
   return http.axiosGet(url, config);
 }
+
+export function fetchPerson(id) {
+  const url = import.meta.env.VITE_SERVER_PREFIX + `people/${id}`;
+
+  return http.axiosGet(url);
+}
