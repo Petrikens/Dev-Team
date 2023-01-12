@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <component :is="layout">
       <router-view />
     </component>
@@ -9,11 +9,23 @@
 <script>
 import EmptyLayout from "./layouts/EmptyLayout.vue";
 import MainLayout from "./layouts/MainLayout.vue";
+import { mapGetters } from "vuex";
+
 export default {
+  beforeMount() {
+    this.$store.dispatch(`authModule/fetchUser`, null, { root: true });
+  },
+
   computed: {
     layout() {
-      return (this.$route.meta.layout || "empty") + "-layout";
+      if (this.getUser) {
+        return this.$route.meta.layout + "-layout";
+      } else {
+        return "empty-layout";
+      }
     },
+
+    ...mapGetters("authModule", ["getUser"]),
   },
 
   components: {

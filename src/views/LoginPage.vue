@@ -1,10 +1,11 @@
 <template>
+  <Toast />
   <div class="nav_top_login_form_t">Sign In</div>
   <form class="lf" @submit.prevent="doLogin" method="POST">
     <div class="nav_top_login_form_line">
       <span class="p-float-label">
-        <InputText id="login" type="text" v-model="handleLogin" />
-        <label for="login">Login</label>
+        <InputText id="login" type="text" v-model="handleEmail" />
+        <label for="login">Email</label>
       </span>
     </div>
     <div class="nav_top_login_form_line">
@@ -22,14 +23,25 @@
 </template>
 
 <script>
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 export default {
   name: "LoginPage",
 
   data() {
     return {
-      handleLogin: "",
+      handleEmail: "",
       handlePassword: "",
     };
+  },
+
+  methods: {
+    doLogin() {
+      this.$store.dispatch(`authModule/login`, {
+        email: this.handleEmail,
+        password: this.handlePassword,
+      });
+    },
   },
 };
 </script>

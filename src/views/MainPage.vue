@@ -75,7 +75,7 @@ export default {
       } catch (error) {
         this.$toast.add({
           severity: "error",
-          summary: "Ошибка",
+          summary: "Error",
           detail: error,
           life: 3000,
         });
