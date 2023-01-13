@@ -36,7 +36,7 @@ export const authModule = {
 
         commit("SET_USER", auth.currentUser);
 
-        router.push("/");
+        router.push("/Dev-Team");
       } catch (error) {
         throw error;
       }
@@ -50,7 +50,7 @@ export const authModule = {
 
         commit("SET_USER", auth.currentUser);
 
-        router.push("/");
+        router.push("/Dev-Team");
       } catch (error) {
         throw error;
       }
@@ -73,7 +73,7 @@ export const authModule = {
           commit("SET_USER", user);
           //if the user is registered, when reloading the page, we will get to the home page
           if (router.isReady() && router.currentRoute.value.path === "/login") {
-            router.push("/");
+            router.push("/Dev-Team");
           }
         }
       });

@@ -15,7 +15,7 @@ const routes = [
     component: () => import("../views/RegisterPage.vue"),
   },
   {
-    path: "/",
+    path: "/Dev-Team",
     name: "main",
     meta: { layout: "main", requiresAuth: true },
     component: () => import("../views/MainPage.vue"),
@@ -32,7 +32,7 @@ router.beforeEach((to, from, next) => {
   //check if the user is registered
   if (to.path === "/login" && auth.currentUser) {
     //if yes, go to home page
-    next("/");
+    next("/Dev-Team");
     return;
   }
 
