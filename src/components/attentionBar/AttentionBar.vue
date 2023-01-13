@@ -7,7 +7,7 @@
     <div class="attention_bar" v-if="!attentionSum"></div>
     <div v-else class="attention_color_wrapper">
       <div
-        v-for="attention in attentionWidth"
+        v-for="attention in attentionWithWidth"
         :key="attention.amount"
         class="attention_color_bar"
         :style="{
@@ -24,6 +24,7 @@ export default {
   name: "AttentionBar",
 
   props: {
+    //width of profit bar
     basicWidth: {
       type: Number,
     },
@@ -33,13 +34,14 @@ export default {
   },
 
   computed: {
+    //generate the sum of all attentions
     attentionSum() {
       return this.attentionInfo
         ? this.attentionInfo.reduce((acc, curr) => acc + curr.Amount, 0)
         : 0;
     },
-
-    attentionWidth() {
+    //generate new array for attention bar with width every attention
+    attentionWithWidth() {
       return this.attentionInfo.map((attention) => ({
         width: (attention.Amount * this.basicWidth) / this.attentionSum,
         amount: attention.Amount,

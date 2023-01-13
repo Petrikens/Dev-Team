@@ -1,3 +1,4 @@
+//directive for infinite scroll
 export default {
   mounted(el, binding) {
     const options = {

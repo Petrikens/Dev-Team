@@ -3,6 +3,8 @@
     :value="tagName"
     :style="{
       background: '#' + tagColor,
+      //10 - initial value
+      //30 - value between tags
       top: index * 30 + 10 + 'px',
     }"
   ></Tag>

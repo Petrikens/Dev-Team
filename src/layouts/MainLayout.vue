@@ -9,6 +9,7 @@
 </template>
 
 <script>
+//layout for home pages
 import HeaderBar from "../components/header/HeaderBar.vue";
 
 export default {

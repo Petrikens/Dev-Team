@@ -64,13 +64,14 @@ export const authModule = {
       router.push("/login");
     },
 
+    //set observer onAuthStateChanged
     fetchUser({ commit }) {
-      auth.onAuthStateChanged(async (user) => {
+      auth.onAuthStateChanged((user) => {
         if (user === null) {
           commit("CLEAR_USER");
         } else {
           commit("SET_USER", user);
-
+          //if the user is registered, when reloading the page, we will get to the home page
           if (router.isReady() && router.currentRoute.value.path === "/login") {
             router.push("/");
           }

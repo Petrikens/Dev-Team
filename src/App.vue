@@ -17,6 +17,7 @@ export default {
   },
 
   computed: {
+    //check which layout to take
     layout() {
       if (this.getUser) {
         return this.$route.meta.layout + "-layout";

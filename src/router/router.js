@@ -29,11 +29,14 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  //check if the user is registered
   if (to.path === "/login" && auth.currentUser) {
+    //if yes, go to home page
     next("/");
     return;
   }
 
+  //if an unregistered user tries to access a page that requires registration
   if (
     to.matched.some((record) => record.meta.requiresAuth) &&
     !auth.currentUser

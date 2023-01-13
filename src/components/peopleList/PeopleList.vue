@@ -4,7 +4,10 @@
     v-for="peopleCard in peopleList"
     :key="peopleCard.Id"
   >
-    <PeopleCard :peopleCard="peopleCard" @click="editCard(peopleCard.Id)" />
+    <PeopleCard
+      :peopleCard="peopleCard"
+      @click="openCardForEdit(peopleCard.Id)"
+    />
   </div>
   <DynamicDialog />
 </template>
@@ -24,7 +27,8 @@ export default {
   },
 
   methods: {
-    editCard(personId) {
+    //open dialog with person info for edit
+    openCardForEdit(personId) {
       this.$dialog.open(EditPersonCard, {
         props: {
           header: "Edit Card",

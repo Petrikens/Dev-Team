@@ -47,6 +47,7 @@ export default {
           { root: true },
         );
       } catch (error) {
+        //handling firebase errors
         switch (error.code) {
           case "auth/email-already-in-use":
             this.errorMessage = "Email already in use";

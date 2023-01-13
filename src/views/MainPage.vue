@@ -31,6 +31,7 @@ export default {
   },
 
   methods: {
+    //function for fetching people list
     async fetchPeople() {
       try {
         const data = {
@@ -56,7 +57,7 @@ export default {
         this.isLoading = false;
       }
     },
-
+    //load more people when scroll the page
     async loadMorePeople() {
       try {
         this.page += 1;

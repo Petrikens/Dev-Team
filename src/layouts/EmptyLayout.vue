@@ -1,5 +1,5 @@
 <template>
-  <div class="content_login_component_vueon">
+  <div class="content_login_component">
     <div class="nav_top_login_form">
       <router-view />
     </div>
@@ -7,11 +7,12 @@
 </template>
 
 <script>
+//layout for login/register pages
 export default {};
 </script>
 
 <style scoped>
-.content_login_component_vueon {
+.content_login_component {
   display: flex;
   width: 100%;
   height: 100vh;

@@ -47,7 +47,7 @@
       label="Edit"
       icon="pi pi-check"
       class="p-button-text"
-      @click="createTask"
+      @click="editCard"
     />
   </div>
 </template>
@@ -77,8 +77,10 @@ export default {
   },
 
   mounted() {
+    //fetch person info, when component is mounted
     this.fetchPerson();
 
+    //take profit width for attention bar
     this.getProfitBarWidth();
   },
 
@@ -88,7 +90,6 @@ export default {
 
   methods: {
     async fetchPerson() {
-      console.log(this.getUser);
       try {
         const response = await peopleApi.fetchPerson(
           this.dialogRef.data.personId,
@@ -104,7 +105,7 @@ export default {
       } catch (error) {
         this.$toast.add({
           severity: "error",
-          summary: "Ошибка",
+          summary: "Error",
           detail: error,
           life: 3000,
         });
@@ -113,19 +114,21 @@ export default {
       }
     },
 
-    async createTask() {
+    async editCard() {
       try {
+        //edited data
         const data = JSON.stringify({
           Name: this.handleName,
           Title: this.handleTitle,
         });
-
+        //auth token from firebase
         const config = {
           headers: {
             "X-Auth-Token": this.getUser.accessToken,
           },
         };
 
+        //person id
         const id = this.personInfo.Id;
 
         const response = await peopleApi.editPerson(data, config, id);
@@ -134,7 +137,7 @@ export default {
       } catch (error) {
         this.$toast.add({
           severity: "error",
-          summary: "Ошибка",
+          summary: "Error",
           detail: error,
           life: 3000,
         });

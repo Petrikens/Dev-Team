@@ -42,6 +42,7 @@ export default {
           password: this.handlePassword,
         });
       } catch (error) {
+        //handling firebase errors
         switch (error.code) {
           case "auth/user-not-found":
             this.errorMessage = "User not found";
