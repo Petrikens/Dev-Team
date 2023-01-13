@@ -22,6 +22,7 @@ export default {
   padding: 0px 20px;
 }
 .content {
-  padding: 0px 150px;
+  padding-left: 150px;
+  padding-right: 78px;
 }
 </style>
