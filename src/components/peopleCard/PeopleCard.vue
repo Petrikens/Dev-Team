@@ -67,7 +67,6 @@ export default {
 <style scoped>
 .p-card {
   width: 15em;
-  margin-bottom: 20px;
   cursor: pointer;
 }
 

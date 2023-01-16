@@ -50,8 +50,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.people_card {
-  margin-right: 72px;
-}
-</style>
+<style scoped></style>

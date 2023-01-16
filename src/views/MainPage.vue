@@ -98,7 +98,8 @@ export default {
 .people_list {
   display: flex;
   flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
+  column-gap: 70px;
+  row-gap: 40px;
 }
 </style>
