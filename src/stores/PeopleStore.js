@@ -4,7 +4,7 @@ import * as peopleApi from "../api/peopleApi";
 export const usePeopleStore = defineStore("peopleStore", {
   state: () => ({
     peopleList: [],
-    perPage: 5,
+    perPage: 10,
     page: 1,
     isLoading: true,
     errorMessage: null,
