@@ -20,10 +20,11 @@ import Avatar from "primevue/avatar";
 
 const app = createApp(App);
 
+import "./assets/css/normalize.css";
+import "./index.css";
 import "primevue/resources/themes/saga-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
-import "./assets/css/normalize.css";
 
 app.use(router);
 app.use(store);

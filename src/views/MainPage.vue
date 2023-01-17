@@ -1,20 +1,27 @@
 <template>
   <loading-spinner v-if="isLoading" />
   <div class="container" v-else>
-    <div class="people_list">
-      <people-list :peopleList="peopleList" />
+    <div class="flex flex-wrap justify-center gap-x-8 gap-y-4">
+      <people-card
+        v-for="peopleCard in peopleList"
+        :key="peopleCard.Id"
+        :peopleCard="peopleCard"
+        @click="openCardForEdit(peopleCard.Id)"
+      />
     </div>
   </div>
+  <DynamicDialog />
   <div v-intersection="loadMorePeople" class="observer"></div>
 </template>
 
 <script>
 import * as peopleApi from "../api/peopleApi";
-import PeopleList from "../components/peopleList/PeopleList.vue";
+import PeopleCard from "../components/peopleCard/PeopleCard.vue";
 import LoadingSpinner from "../components/uiComponents/LoadingSpinner.vue";
+import EditPersonCard from "../components/editPersonCard/EditPersonCard.vue";
 
 export default {
-  components: { LoadingSpinner, PeopleList },
+  components: { LoadingSpinner, PeopleCard },
   name: "MainPage",
 
   data() {
@@ -84,22 +91,26 @@ export default {
         this.isLoading = false;
       }
     },
+
+    //open dialog with person info for edit
+    openCardForEdit(personId) {
+      this.$dialog.open(EditPersonCard, {
+        props: {
+          header: "Edit Card",
+          style: {
+            width: "30vw",
+          },
+          breakpoints: {
+            "960px": "75vw",
+            "640px": "90vw",
+          },
+          modal: true,
+        },
+        data: {
+          personId,
+        },
+      });
+    },
   },
 };
 </script>
-
-<style scoped>
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.people_list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  column-gap: 70px;
-  row-gap: 40px;
-}
-</style>

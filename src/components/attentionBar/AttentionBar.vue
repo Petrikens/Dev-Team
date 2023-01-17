@@ -1,15 +1,15 @@
 <template>
   <div class="attention">
-    <div class="attention_label">
+    <div class="flex justify-between">
       <p>Attention</p>
       <p>{{ attentionSum }} h</p>
     </div>
-    <div class="attention_bar" v-if="!attentionSum"></div>
-    <div v-else class="attention_color_wrapper">
+    <div class="w-full h-4 bg-barColor" v-if="!attentionSum"></div>
+    <div v-else class="flex">
       <div
         v-for="attention in attentionWithWidth"
         :key="attention.amount"
-        class="attention_color_bar"
+        class="h-4"
         :style="{
           background: '#' + attention.color,
           width: attention.width + 'px',
@@ -51,23 +51,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.attention_label {
-  display: flex;
-  justify-content: space-between;
-}
-
-.attention_bar {
-  width: 100%;
-  height: 15px;
-  background: #dee2e6;
-}
-
-.attention_color_wrapper {
-  display: flex;
-}
-.attention_color_bar {
-  height: 15px;
-}
-</style>

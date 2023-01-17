@@ -1,10 +1,14 @@
 <template>
-  <div class="edit_card_wrapper">
+  <div class="flex justify-center relative">
     <loading-spinner v-if="isLoading" />
-    <Card v-else>
+    <Card v-else class="w-60 cursor-pointer mb-5">
       <template #header>
-        <div class="card_img">
-          <img alt="card img" :src="personInfo.Photo" />
+        <div class="w-full h-52 rounded-3xl relative">
+          <img
+            alt="card img"
+            :src="personInfo.Photo"
+            class="w-full h-full object-cover rounded-3xl"
+          />
           <div
             class="tags"
             v-for="(tag, index) in personInfo.Tags"
@@ -36,7 +40,8 @@
       </template>
     </Card>
   </div>
-  <div class="button_block">
+
+  <div class="flex justify-between">
     <Button
       label="Close"
       icon="pi pi-times"
@@ -44,7 +49,7 @@
       @click="() => dialogRef.close()"
     />
     <Button
-      label="Edit"
+      label="Save"
       icon="pi pi-check"
       class="p-button-text"
       @click="editCard"
@@ -150,34 +155,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.edit_card_wrapper {
-  display: flex;
-  justify-content: center;
-  position: relative;
-}
-.p-card {
-  width: 15em;
-  margin-bottom: 20px;
-  cursor: pointer;
-}
-
-.card_img {
-  width: 100%;
-  height: 200px;
-  border-radius: 20px;
-  position: relative;
-}
-
-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 20px;
-}
-.button_block {
-  display: flex;
-  justify-content: space-between;
-}
-</style>

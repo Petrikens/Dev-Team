@@ -1,12 +1,16 @@
 <template>
-  <div class="header_wrapper">
-    <div class="header_logo">
-      <img src="../../assets/img/logo.png" alt="logo" />
+  <div class="flex justify-between py-10">
+    <div class="w-14 h-14">
+      <img
+        src="../../assets/img/logo.png"
+        alt="logo"
+        class="w-full h-full object-cover"
+      />
     </div>
     <InputText type="text" placeholder="Search by name" />
     <Avatar
+      class="cursor-pointer mr-2"
       icon="pi pi-user"
-      class="mr-2"
       size="large"
       style="background-color: #2196f3; color: #ffffff"
       @click="toggle"
@@ -32,26 +36,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.header_wrapper {
-  padding: 40px 0px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.p-avatar {
-  cursor: pointer;
-}
-
-.header_logo {
-  width: 60px;
-  height: 50px;
-}
-
-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-</style>

@@ -1,6 +1,6 @@
 <template>
-  <div class="profit">
-    <div class="profit_label">
+  <div class="mb-3">
+    <div class="flex justify-between">
       <p>Profit</p>
       <p>+ ${{ amount }}</p>
     </div>
@@ -38,15 +38,6 @@ export default {
 </script>
 
 <style scoped>
-.profit {
-  margin-bottom: 10px;
-}
-
-.profit_label {
-  display: flex;
-  justify-content: space-between;
-}
-
 .p-progressbar :deep(.p-progressbar-value) {
   background: v-bind(bgColor);
 }

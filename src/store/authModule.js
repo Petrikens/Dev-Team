@@ -61,7 +61,7 @@ export const authModule = {
 
       commit("CLEAR_USER");
 
-      router.push("/login");
+      router.push("/Dev-Team/login");
     },
 
     //set observer onAuthStateChanged
@@ -72,7 +72,10 @@ export const authModule = {
         } else {
           commit("SET_USER", user);
           //if the user is registered, when reloading the page, we will get to the home page
-          if (router.isReady() && router.currentRoute.value.path === "/login") {
+          if (
+            router.isReady() &&
+            router.currentRoute.value.path === "/Dev-Team/login"
+          ) {
             router.push("/Dev-Team");
           }
         }

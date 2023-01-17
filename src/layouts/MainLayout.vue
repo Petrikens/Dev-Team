@@ -1,10 +1,8 @@
 <template>
   <Toast />
-  <div class="main_wrapper">
+  <div class="px-8">
     <header-bar />
-    <div class="content">
-      <router-view />
-    </div>
+    <router-view />
   </div>
 </template>
 
@@ -16,12 +14,3 @@ export default {
   components: { HeaderBar },
 };
 </script>
-
-<style scoped>
-.main_wrapper {
-  padding: 0px 20px;
-}
-.content {
-  padding: 0 150px;
-}
-</style>

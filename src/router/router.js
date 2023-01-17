@@ -3,13 +3,13 @@ import { auth } from "../firebase";
 
 const routes = [
   {
-    path: "/login",
+    path: "/Dev-Team/login",
     name: "login",
     meta: { layout: "empty" },
     component: () => import("../views/LoginPage.vue"),
   },
   {
-    path: "/register",
+    path: "/Dev-Team/register",
     name: "register",
     meta: { layout: "empty" },
     component: () => import("../views/RegisterPage.vue"),
@@ -41,7 +41,7 @@ router.beforeEach((to, from, next) => {
     to.matched.some((record) => record.meta.requiresAuth) &&
     !auth.currentUser
   ) {
-    next("/login");
+    next("/Dev-Team/login");
     return;
   }
 

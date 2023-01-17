@@ -1,5 +1,6 @@
 <template>
   <Tag
+    class="absolute right-3"
     :value="tagName"
     :style="{
       background: '#' + tagColor,
@@ -29,10 +30,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.p-tag {
-  position: absolute;
-  right: 10px;
-}
-</style>
