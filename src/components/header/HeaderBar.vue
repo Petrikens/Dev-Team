@@ -16,19 +16,20 @@
       @click="toggle"
     />
     <OverlayPanel ref="op" id="overlay_panel">
-      <Button label="Logout" class="p-button-warning" @click="handleSignOut" />
+      <Button label="Logout" class="p-button-warning" @click="logout()" />
     </OverlayPanel>
   </div>
 </template>
 
 <script>
+import { mapActions } from "pinia";
+import { useAuthStore } from "../../stores/AuthStore";
+
 export default {
   name: "HeaderBar",
 
   methods: {
-    handleSignOut() {
-      this.$store.dispatch(`authModule/logout`, null, { root: true });
-    },
+    ...mapActions(useAuthStore, ["logout"]),
 
     toggle(event) {
       this.$refs.op.toggle(event);

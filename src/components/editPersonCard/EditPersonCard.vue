@@ -52,18 +52,18 @@
       label="Save"
       icon="pi pi-check"
       class="p-button-text"
-      @click="editCard"
+      @click="editCard({ name: handleName, title: handleTitle })"
     />
   </div>
 </template>
 
 <script>
-import * as peopleApi from "../../api/peopleApi";
 import AttentionBar from "../attentionBar/AttentionBar.vue";
 import CardTag from "../cardTag/CardTag.vue";
 import ProfitBar from "../profitBar/ProfitBar.vue";
 import LoadingSpinner from "../uiComponents/LoadingSpinner.vue";
-import { mapGetters } from "vuex";
+import { mapActions, mapState } from "pinia";
+import { usePersonInfoStore } from "../../stores/PersonInfoStore";
 
 export default {
   name: "EditPersonCard",
@@ -74,8 +74,7 @@ export default {
 
   data() {
     return {
-      isLoading: true,
-      personInfo: null,
+      profitBarWidth: null,
       handleName: null,
       handleTitle: null,
     };
@@ -83,74 +82,44 @@ export default {
 
   mounted() {
     //fetch person info, when component is mounted
-    this.fetchPerson();
+    this.fetchPerson(this.dialogRef.data.personId);
 
     //take profit width for attention bar
     this.getProfitBarWidth();
   },
 
   computed: {
-    ...mapGetters("authModule", ["getUser"]),
+    ...mapState(usePersonInfoStore, [
+      "personInfo",
+      "isLoading",
+      "errorMessage",
+    ]),
   },
 
   methods: {
-    async fetchPerson() {
-      try {
-        const response = await peopleApi.fetchPerson(
-          this.dialogRef.data.personId,
-        );
+    ...mapActions(usePersonInfoStore, ["fetchPerson"]),
 
-        this.personInfo = await response.data;
-
-        this.handleName = await response.data.Name;
-
-        this.handleTitle = await response.data.Title;
-
-        this.isLoading = false;
-      } catch (error) {
-        this.$toast.add({
-          severity: "error",
-          summary: "Error",
-          detail: error,
-          life: 3000,
-        });
-
-        this.isLoading = false;
-      }
-    },
-
-    async editCard() {
-      try {
-        //edited data
-        const data = JSON.stringify({
-          Name: this.handleName,
-          Title: this.handleTitle,
-        });
-        //auth token from firebase
-        const config = {
-          headers: {
-            "X-Auth-Token": this.getUser.accessToken,
-          },
-        };
-
-        //person id
-        const id = this.personInfo.Id;
-
-        const response = await peopleApi.editPerson(data, config, id);
-
-        console.log(response.data);
-      } catch (error) {
-        this.$toast.add({
-          severity: "error",
-          summary: "Error",
-          detail: error,
-          life: 3000,
-        });
-      }
-    },
+    ...mapActions(usePersonInfoStore, ["editCard"]),
 
     getProfitBarWidth() {
       this.profitBarWidth = document.getElementById("profitBar").offsetWidth;
+    },
+  },
+
+  watch: {
+    personInfo() {
+      this.handleName = this.personInfo.Name;
+      this.handleTitle = this.personInfo.Title;
+    },
+    errorMessage(newMessage) {
+      if (newMessage) {
+        this.$toast.add({
+          severity: "error",
+          summary: "Error",
+          detail: newMessage,
+          life: 3000,
+        });
+      }
     },
   },
 };

@@ -61,3 +61,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.p-component {
+  font-family: "Roboto", sans-serif;
+}
+</style>

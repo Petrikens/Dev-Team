@@ -1,7 +1,10 @@
 <template>
   <Toast />
   <div class="font-medium text-xl text-center mb-3">Sign In</div>
-  <form @submit.prevent="doLogin" method="POST">
+  <form
+    @submit.prevent="login({ email: handleEmail, password: handlePassword })"
+    method="POST"
+  >
     <div class="w-full mb-5">
       <span class="p-float-label">
         <InputText
@@ -33,6 +36,8 @@
 </template>
 
 <script>
+import { mapActions, mapState } from "pinia";
+import { useAuthStore } from "../stores/AuthStore";
 export default {
   name: "LoginPage",
 
@@ -40,34 +45,24 @@ export default {
     return {
       handleEmail: "",
       handlePassword: "",
-      errorMessage: "",
     };
   },
 
-  methods: {
-    async doLogin() {
-      try {
-        await this.$store.dispatch(`authModule/login`, {
-          email: this.handleEmail,
-          password: this.handlePassword,
-        });
-      } catch (error) {
-        //handling firebase errors
-        switch (error.code) {
-          case "auth/user-not-found":
-            this.errorMessage = "User not found";
-            break;
-          case "auth/wrong-password":
-            this.errorMessage = "Wrong password";
-            break;
-          default:
-            this.errorMessage = "Something went wrong";
-        }
+  computed: {
+    ...mapState(useAuthStore, ["errorMessage"]),
+  },
 
+  methods: {
+    ...mapActions(useAuthStore, ["login"]),
+  },
+
+  watch: {
+    errorMessage(newMessage) {
+      if (newMessage) {
         this.$toast.add({
           severity: "warn",
           summary: "Warning",
-          detail: this.errorMessage,
+          detail: newMessage,
           life: 3000,
         });
       }

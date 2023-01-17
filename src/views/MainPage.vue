@@ -11,85 +11,34 @@
     </div>
   </div>
   <DynamicDialog />
-  <div v-intersection="loadMorePeople" class="observer"></div>
+  <div v-intersection="loadPeople" class="observer"></div>
 </template>
 
 <script>
-import * as peopleApi from "../api/peopleApi";
 import PeopleCard from "../components/peopleCard/PeopleCard.vue";
 import LoadingSpinner from "../components/uiComponents/LoadingSpinner.vue";
 import EditPersonCard from "../components/editPersonCard/EditPersonCard.vue";
+import { mapActions, mapState } from "pinia";
+import { usePeopleStore } from "../stores/PeopleStore";
 
 export default {
   components: { LoadingSpinner, PeopleCard },
   name: "MainPage",
 
-  data() {
-    return {
-      peopleList: [],
-      isLoading: true,
-      page: 1,
-      perPage: 8,
-    };
-  },
-
   mounted() {
     this.fetchPeople();
   },
 
+  computed: {
+    ...mapState(usePeopleStore, ["peopleList", "isLoading", "errorMessage"]),
+  },
+
   methods: {
-    //function for fetching people list
-    async fetchPeople() {
-      try {
-        const data = {
-          params: {
-            pp: this.perPage,
-            p: this.page,
-          },
-        };
+    ...mapActions(usePeopleStore, ["fetchPeople"]),
+    ...mapActions(usePeopleStore, ["loadMorePeople"]),
 
-        const response = await peopleApi.fetchPeopleList(data);
-
-        this.peopleList = await response.data;
-
-        this.isLoading = false;
-      } catch (error) {
-        this.$toast.add({
-          severity: "error",
-          summary: "Ошибка",
-          detail: error,
-          life: 3000,
-        });
-
-        this.isLoading = false;
-      }
-    },
-    //load more people when scroll the page
-    async loadMorePeople() {
-      try {
-        this.page += 1;
-        const data = {
-          params: {
-            pp: this.perPage,
-            p: this.page,
-          },
-        };
-
-        const response = await peopleApi.fetchPeopleList(data);
-
-        this.peopleList = [...this.peopleList, ...response.data];
-
-        this.isLoading = false;
-      } catch (error) {
-        this.$toast.add({
-          severity: "error",
-          summary: "Error",
-          detail: error,
-          life: 3000,
-        });
-
-        this.isLoading = false;
-      }
+    loadPeople() {
+      this.loadMorePeople();
     },
 
     //open dialog with person info for edit
@@ -110,6 +59,19 @@ export default {
           personId,
         },
       });
+    },
+  },
+
+  watch: {
+    errorMessage(newMessage) {
+      if (newMessage) {
+        this.$toast.add({
+          severity: "error",
+          summary: "Error",
+          detail: newMessage,
+          life: 3000,
+        });
+      }
     },
   },
 };

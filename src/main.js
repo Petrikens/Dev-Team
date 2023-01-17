@@ -2,7 +2,7 @@ import { createApp } from "vue";
 import PrimeVue from "primevue/config";
 import App from "./App.vue";
 import router from "./router/router";
-import { store } from "./store";
+import { createPinia } from "pinia";
 import VIntersection from "./directives/VIntersection";
 
 import Button from "primevue/button";
@@ -19,6 +19,7 @@ import OverlayPanel from "primevue/overlaypanel";
 import Avatar from "primevue/avatar";
 
 const app = createApp(App);
+const pinia = createPinia();
 
 import "./assets/css/normalize.css";
 import "./index.css";
@@ -27,7 +28,7 @@ import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 
 app.use(router);
-app.use(store);
+app.use(pinia);
 app.mount("#app");
 app.use(PrimeVue);
 app.use(ToastService);

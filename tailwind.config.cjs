@@ -6,6 +6,9 @@ module.exports = {
       backgroundColor: {
         barColor: "#dee2e6",
       },
+      fontFamily: {
+        Roboto: ["Roboto", "sans-serif"],
+      },
       container: {
         center: true,
       },
